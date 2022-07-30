@@ -5,6 +5,7 @@ import React, {
   createContext,
   useContext,
 } from "react";
+import { useMemo } from "react";
 
 // preserves value
 // DOES NOT trigger re-render
@@ -14,6 +15,7 @@ const UserContext = createContext();
 
 const UseHooks = () => {
   const [user, setUser] = useState("PLEASE SUBMIT");
+  const [booolean, setbooolean] = useState(false);
 
   const refName = useRef(null);
   const refEmail = useRef(null);
@@ -24,8 +26,15 @@ const UseHooks = () => {
     e.preventDefault();
     setUser("THANK YOU");
   };
-
-  useEffect(() => {});
+  const d = useRef({ a: 1 });
+  const a = useMemo(() => {
+    return { b: 1 };
+  }, []);
+  let c = 1;
+  useEffect(() => {
+    console.log("first", a.b);
+  }, [a]);
+  const label = document.querySelector("#password-label");
 
   return (
     <>
@@ -51,7 +60,13 @@ const UseHooks = () => {
           <input type="password" ref={refPassword} />
         </div>
         <br></br>
-        <button id="submit-label" type="submit">
+        <button
+          id="submit-label"
+          type="submit"
+          onClick={() => {
+            setbooolean(!booolean);
+          }}
+        >
           Submit
         </button>
         <UserContext.Provider value={user}>
